@@ -1,0 +1,10 @@
+进程注入方法
+1. 通过CreateRemoteThread创建远程线程调用LoadLibrary
+2. 通过QueueUserAPC挂载APC调用LoadLibrary
+3. 向远程进程中写入一段简单的Shell Code，在Shell Code调用LoadLibrary
+4. 修改远程线程的Context，在其Context中构造调用LoadLibray的堆栈状态
+5. Lsp注入
+6. 输入法注入
+7. Explorer Shell Extension注入
+8. 通过SetWindowsHookEx或者SetWinEventHook函数设置全局钩子
+9. Dll模块劫持(LPK.dll,ComRes.dll, 以及开发者犯错构成的模块劫持)
