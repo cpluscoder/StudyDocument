@@ -1,0 +1,136 @@
+增值税专普票
+HWYSYZZSZYFP:货物运输业增值税专用发票
+JDCFP:机动车销售统一发票
+DZFP:电子增值税普通发票
+增值税普通发票(卷票)
+
+JSZZP:卷式增普票
+
+
+BSDC.BSDataOutput.InitializeComponent_1
+报税资料传出
+1.本功能用于将本机报税明细资料传到指定磁盘上，生成本期报税资料磁盘文件。
+2.资料传出产生一个报税文件：本报税月的销项防伪发票文件。
+
+
+
+
+PTFP = 2	"c"	"普通发票", "收购发票", "农产品销售发票"
+ZYFP = 0	"s"	"专用发票"
+HYFP = 11	"f"	"货物运输业增值税专用发票"
+JDCFP = 12	"j"	"机动车销售统一发票"
+DZFP = 0x33	"p"	"电子增值税普通发票"
+JSFP = 0x29	"q"	"增值税普通发票(卷票)"
+
+
+
+
+
+JSZZP:卷式增普票
+
+
+"0":"未报送"
+"1":"已报送"
+"2":"报送失败"
+"3":"报送中"
+"4":"验签失败"
+
+"0":"未审核"
+"1":"已审核"
+"2":"已记账"
+"3":"暂存"
+
+
+----------------------------抄税清卡XML生成----------------------------
+Aisino.Fwkp.Yccb.RemoteReport.GetRequestMsg
+business
+"id=HX_KPXXSC"	"comment=开票信息上传"
+"id=HX_JKHCQQ"	"comment=监控回传请求"
+body
+"count=1"
+skph(税控盘号)
+nsrsbh(纳税人识别号)
+kpjh(开票机号)
+"bssj=yyyy-MM-dd HH:mm"
+<group "xh=1"/>
+<data "name=fplx_dm" value=""/>
+value:009(货运);005(机动车);026(卷式票清卡)
+"hzData"
+"nsrsbh"
+"kpjh"
+"bssj"
+"sbbh"
+"hxsh"
+"fplxdm"
+"ssq"
+"hzsj"
+<data "name=fpmx" value="ToBase64(AES_Crypt.Encrypt(xml, "lxdyccb123456wjh", "wjhyccb123456lxd"))"/>
+
+
+----------------------------抄税清卡结果XML解析----------------------------
+Aisino.Fwkp.Yccb.RemoteReport.ProcessMsg 
+
+
+
+LINUX编码:GB18030
+
+LINUX加解密
+BUF1 = { 0xaf, 0x52, 0xde, 0x45, 15, 0x58, 0xcd, 0x10, 0x23, 0x8b, 0x45, 0x6a, 0x10, 0x90, 0xaf, 0xbd };
+BUF2 = { 2, 0xaf, 0xbc, 0xab, 0xcc, 0x90, 0x39, 0x90, 0xbc, 0xaf, 0x86, 0x99, 0xad, 170, 0xfb, 0x60 };
+明文 = AES_Crypt.Decrypt(Convert.FromBase64String(this.mw), buffer4, buffer5, byte_0);
+
+非LINUX加解密
+BUF1 = { 0xaf, 0x52, 0xde, 0x45, 15, 0x58, 0xcd, 0x10, 0x23, 0x8b, 0x45, 0x6a, 0x10, 0x90, 0xaf, 0xbd, 
+         0xad, 0xdb, 0xae, 0x8d, 0xac, 0x80, 0x52, 0xff, 0x45, 0x90, 0x85, 0xca, 0xcb, 0x9f, 0xaf, 0xbd};
+BUF2 = { 2, 0xaf, 0xbc, 0xab, 0xcc, 0x90, 0x39, 0x90, 0xbc, 0xaf, 0x86, 0x99, 0xad, 170, 0xfb, 0x60 };
+明文 = AES_Crypt.Decrypt(Convert.FromBase64String(this.mw), buffer, buffer2, byte_0);
+
+
+
+加解密XML
+BUF1 = {0x33, 0x95, 0x9d, 0x54, 30, 0x57, 0x9c, 0xb9, 0x2a, 0x8b, 0xb5, 0x6a, 0x1c, 0x9d, 0xff, 0xb2, 
+0x2d, 0xbb, 0xae, 0xcd, 0x5c, 240, 0x5f, 0x2f, 0x4d, 0x9e, 0x8b, 170, 0xcb, 0x9e, 0xbf, 13}
+BUF2 = { 0xa1, 0xac, 0xbb, 0xba, 0xfb, 9, 200, 0xb9, 12, 0x9f, 0x56, 0xa9, 0xbd, 0xca, 0x6b, 0xf3 };
+明文 = AES_Crypt.Decrypt(密文, BUF1, BUF2, null);
+
+
+
+PeriodEarlyStockNum:期初库存
+BuyNum:购进发票份数
+PeriodEndStockNum:期末库存份数
+ReturnInvNum:退回发票份数
+AllotInvNum:分配发票份数
+ReclaimStockNum:收回发票份数
+
+
+XXZSJE:正数金额
+XXZFJE:正废金额
+XXFSJE:负数金额
+XXFFJE:负废金额
+XXZSSE:正数税额
+XXZFSE:正废税额
+XXFSSE:负数税额
+XXFFSE:负废税额
+SJXSJE:实际销售金额
+SJXXSE:实际销售税额
+
+
+
+
+
+
+namespace BSDC:报税导出
+namespace Aisino.Fwkp.Yccb:远程抄报
+namespace Aisino.Fwkp.Bsgl:抄报管理
+
+
+
+Aisino.Fwkp.Bsgl.FPExport:发票导出
+
+
+
+
+
+
+
+
